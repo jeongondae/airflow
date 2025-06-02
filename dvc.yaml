@@ -1,0 +1,28 @@
+stages:
+  download:
+    cmd: python scripts/1_download.py
+    deps:
+    - scripts/1_download.py
+    outs:
+    - data/iris.csv
+  preprocess:
+    cmd: python scripts/2_preprocess.py
+    deps:
+    - data/iris.csv
+    - scripts/2_preprocess.py
+    outs:
+    - data/iris_preprocessed.csv
+  train:
+    cmd: python scripts/3_train.py
+    deps:
+    - data/iris_preprocessed.csv
+    - scripts/3_train.py
+    outs:
+    - model.pkl
+  evaluate:
+    cmd: python scripts/4_save_result.py
+    deps:
+    - models/model.pkl
+    - scripts/4_save_result.py
+    outs:
+    - models/metrics.txt
