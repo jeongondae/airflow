@@ -11,14 +11,14 @@ stages:
     - data/iris.csv
     - scripts/2_preprocess.py
     outs:
-    - data/iris_preprocessed.csv
+    - data/iris_processed.csv
   train:
     cmd: python scripts/3_train.py
     deps:
-    - data/iris_preprocessed.csv
+    - data/iris_processed.csv
     - scripts/3_train.py
     outs:
-    - model.pkl
+    - models/model.pkl
   evaluate:
     cmd: python scripts/4_save_result.py
     deps:

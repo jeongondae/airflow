@@ -11,8 +11,10 @@ services:
       - postgres-db-volume:/var/lib/postgresql/data
 
   airflow-webserver:
-    build: .
-    image: custom-airflow-with-dvc  # 공통 이미지 사용
+    #image: apache/airflow:2.9.1
+    build: .  # 👈 Dockerfile 위치가 현재 디렉터리일 경우
+    image: custom-airflow-with-dvc  # 👈 새 이미지 이름
+
     depends_on:
       - postgres
     environment:
@@ -26,15 +28,10 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/opt/airflow/requirements.txt
-      - ./scripts:/opt/airflow/scripts
-      - ./data:/opt/airflow/data
-      - ./models:/opt/airflow/models
-      - ./mlruns:/opt/airflow/mlruns
     command: webserver
     restart: always
-
   airflow-scheduler:
-    image: custom-airflow-with-dvc  # ✅ 동일 이미지 사용
+    image: apache/airflow:2.9.1
     depends_on:
       - postgres
     environment:
@@ -44,12 +41,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./scripts:/opt/airflow/scripts
-      - ./data:/opt/airflow/data
-      - ./models:/opt/airflow/models
-      - ./mlruns:/opt/airflow/mlruns
     command: scheduler
-    restart: always
 
 volumes:
   postgres-db-volume:

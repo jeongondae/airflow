@@ -1,0 +1,6 @@
+FROM apache/airflow:2.9.1
+
+USER airflow
+
+# DVC 설치 (로컬 파일용)
+RUN pip install --no-cache-dir dvc
